@@ -20,15 +20,15 @@ Example:
 4. create a new container with volume on host
 >docker run -d --name proxy_apache -p 10090:80 --restart=always -v /data/docker/appdata/proxy_apache/conf:/usr/local/apache2/conf -v /data/docker/appdata/proxy_apache/logs:/usr/local/apache2/logs -v /data/docker/appdata/proxy_apache/htdocs:/usr/local/apache2/htdocs tansong0091/httpd-oidc:0.1
 
-5. uncomment following to enable open id in httpd.conf
+5. uncomment following to enable open id in conf/httpd.conf
 #Include conf/oidc.conf
 
-6. change following openid parameters in  oidc.conf
+6. change following openid parameters in  conf/oidc.conf
 
 >OIDCProviderMetadataURL https://example.com/fss/.well-known/openid-configuration
 >
 >#for stage
->#OIDCProviderMetadataURL https://fssfed.stage.ge.com/fss/.well-known/openid-configuration
+>#OIDCProviderMetadataURL https://fssfed.stage1.gg.com/fss/.well-known/openid-configuration
 >
 >#Client ID. Obtain from example.com/*oidc
 >OIDCClientID your_client_id
