@@ -6,16 +6,26 @@ COPY entrypoint.sh /entrypoint.sh
 COPY conf/oidc.conf /usr/local/apache2/conf/
 COPY conf/httpd.conf /usr/local/apache2/conf/
 COPY libapache2-mod-auth-openidc_2.3.11-1.stretch+1_amd64.deb /user/local/libapache2-mod-auth-openidc_2.3.11-1.stretch+1_amd64.deb
+ 
+WORKDIR /usr/local/apache2
 
 RUN apt-get -o Acquire::http::proxy="http://PITC-Zscaler-Americas-Cincinnati3PR.proxy.corporate.ge.com:80/" update\
-    && DEBIAN_FRONTEND=noninteractive apt-get  -o Acquire::http::proxy="http://PITC-Zscaler-Americas-Cincinnati3PR.proxy.corporate.ge.com:80/" install -y apt-utils --allow-unauthenticated libapache2-mod-auth-openidc=2.1.6-1 vim procps\
+    && DEBIAN_FRONTEND=noninteractive apt-get  -o Acquire::http::proxy="http://PITC-Zscaler-Americas-Cincinnati3PR.proxy.corporate.ge.com:80/" install -y apt-utils --allow-unauthenticated libapache2-mod-auth-openidc=2.1.6-1 vim procps gcc g++ make libffi-dev wget\
     && dpkg -i /user/local/libapache2-mod-auth-openidc_2.3.11-1.stretch+1_amd64.deb \
     && rm -rf /user/local/libapache2-mod-auth-openidc_2.3.11-1.stretch+1_amd64.deb \
-    && DEBIAN_FRONTEND=noninteractive apt-get  -o Acquire::http::proxy="http://PITC-Zscaler-Americas-Cincinnati3PR.proxy.corporate.ge.com:80/" install -y apt-utils --allow-unauthenticated vim procps\
     && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-    && echo "Asia/Shanghai" > /etc/timezone
+    && echo "Asia/Shanghai" > /etc/timezonea \
+    && wget http://apache.spinellicreations.com/tomcat/tomcat-connectors/jk/tomcat-connectors-1.2.48-src.tar.gz \
+    && tar xvfz tomcat-connectors-1.2.48-src.tar.gz \
+    && cd tomcat-connectors-1.2.48-src/native \
+    && ./configure --with-apxs=/usr/local/apache2/bin/apxs \
+    && make \
+    && make install \
+    && chmod 755 /usr/local/apache2/modules/mod_jk.so \
+    && rm -rf /app/tomcat-connectors-1.2.48-src /app/tomcat-connectors-1.2.48-src.tar.gz 
+
 RUN chmod 755 -R /usr/local/apache2/htdocs
 
 
-EXPOSE 80
+EXPOSE 80 443
 ENTRYPOINT ["/entrypoint.sh"]

@@ -3,6 +3,9 @@ https://github.com/tansong0091/httpd-oidc
 
 This is apache2.4 with open id module. you can use it as a reverse-proxy with open id authentication.
 
+httpd-oidc:0.2
+add jk_mod in apache
+
 Example:
 
 1. generate a container
