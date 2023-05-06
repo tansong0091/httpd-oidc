@@ -1,0 +1,4 @@
+this is based on 2.4.57-openssl1.1.1t-without-oidc and added openid module
+although openssl 1.1.1n is deleted from source image but image still introduce openssl 1.1.1n.
+but openssl 1.1.1n is not used so you can manually delete it if necessary by
+apt-get remove -y openssl
