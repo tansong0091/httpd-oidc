@@ -9,6 +9,4 @@ docker build \
     --tag httpd-oidc:${version} \
     .
 docker tag httpd-oidc:${version} tansong0091/httpd-oidc:${version}
-docker tag httpd-oidc:${version} corpdtshdbstg.corporate.ge.com/httpd-oidc:${version}
-docker push corpdtshdbstg.corporate.ge.com/httpd-oidc:${version}
 docker push tansong0091/httpd-oidc:${version}
